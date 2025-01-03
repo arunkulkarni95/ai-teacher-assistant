@@ -14,29 +14,35 @@ logfire.configure()
 
 async def test_plaintext_workflow():
     """
-    Test the plaintext workflow with sample inputs.
+    Test the plaintext workflow with sample inputs, generating six lesson plans.
     """
     topic = "Fractions"
     content = "Today's lesson is about adding and subtracting fractions."
     grade_level = 5
     objectives = [
         "Understand fractions.",
-        "Practice addition and subtraction of fractions."
+        "Practice addition and subtraction of fractions.",
+        "Solve fraction word problems."
     ]
+    state = "Maryland"
 
     # Process the lesson plan
-    lesson_plans = await process_plaintext_workflow(topic, content, grade_level, objectives)
+    lesson_plans = await process_plaintext_workflow(topic, content, grade_level, objectives, state)
 
-    # Generate Markdown outputs
+    # Validate that six lesson plans are generated
+    assert len(lesson_plans) == 6, "Expected 6 lesson plans (3 English, 3 Spanish)."
+
+    # Print each lesson plan as Markdown
     for lesson_plan in lesson_plans:
         markdown_output = lesson_plan.to_markdown()
-        print(markdown_output)  # For console output
-        Markdown(markdown_output)  # For interactive Markdown display
+        print(markdown_output)
+        print("\n" + "=" * 40 + "\n")  # Separator for readability
+        Markdown(markdown_output)
 
 
 async def test_pdf_workflow():
     """
-    Test the PDF workflow with sample PDF content.
+    Test the PDF workflow with simulated PDF text, generating six lesson plans.
     """
     # Simulated extracted text from a PDF
     pdf_text = """
@@ -49,17 +55,22 @@ async def test_pdf_workflow():
         "Practice addition and subtraction of fractions.",
         "Solve fraction word problems."
     ]
+    state = "Maryland"
 
     # Process the lesson plan
-    lesson_plans = await process_pdf_workflow(pdf_text, grade_level, objectives)
+    lesson_plans = await process_pdf_workflow(pdf_text, grade_level, objectives, state)
 
-    # Generate Markdown outputs
+    # Validate that six lesson plans are generated
+    assert len(lesson_plans) == 6, "Expected 6 lesson plans (3 English, 3 Spanish)."
+
+    # Print each lesson plan as Markdown
     for lesson_plan in lesson_plans:
         markdown_output = lesson_plan.to_markdown()
-        print(markdown_output)  # For console output
-        Markdown(markdown_output)  # For interactive Markdown display
+        print(markdown_output)
+        print("\n" + "=" * 40 + "\n")  # Separator for readability
+        Markdown(markdown_output)
 
 
 if __name__ == "__main__":
     asyncio.run(test_plaintext_workflow())
-    asyncio.run(test_pdf_workflow())
+    #asyncio.run(test_pdf_workflow())

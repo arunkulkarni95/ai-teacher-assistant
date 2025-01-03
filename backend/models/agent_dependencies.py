@@ -18,4 +18,4 @@ class DifferentiationResult(BaseModel):
     """
     Result type for the DifferentiationAgent.
     """
-    activity_text: str = Field(description="A differentiated activity for the specified skill level.")
+    activity_text: str = Field(description="A differentiated activity for the specified skill level, grade, and state.")
