@@ -9,12 +9,14 @@ class HomeworkAssignment(BaseModel):
 
     def to_markdown(self) -> str:
         """
-        Convert the homework assignment to Markdown format.
+        Generate a Markdown representation of the homework assignment.
         """
-        questions_md = "\n".join([f"- {q}" for q in self.questions])
+        questions_md = "\n".join([f"- {question}" for question in self.questions])
+
         return (
-            f"# {self.title}\n\n"
+            f"# Homework Assignment\n\n"
+            f"**Title:** {self.title}\n\n"
             f"**Description:** {self.description}\n\n"
             f"**Due Date:** {self.due_date}\n\n"
-            f"### Questions\n{questions_md}"
+            f"## Questions\n{questions_md}"
         )

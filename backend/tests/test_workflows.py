@@ -1,21 +1,27 @@
-import sys
 import os
+import sys
 
 # Add the backend directory to sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from workflows.lesson_plan_workflow import process_lesson_plan
 import asyncio
+from workflows.lesson_plan_workflow import process_lesson_plan
+from IPython.display import Markdown
 import logfire
 
 logfire.configure()
 
-def test_lesson_plan_workflow():
+async def test_lesson_plan_workflow():
     topic = "Fractions"
     content = "Today's lesson is about adding and subtracting fractions."
 
-    lesson_plan = asyncio.run(process_lesson_plan(topic, content, "es"))
-    print(lesson_plan.model_dump_json(indent=4))
+    # Process the lesson plan
+    lesson_plan = await process_lesson_plan(topic, content, "es")
+
+    # Convert to Markdown and display
+    markdown_output = lesson_plan.to_markdown()
+    print(markdown_output)  # For console output
+    Markdown(markdown_output)  # For interactive Markdown display
 
 if __name__ == "__main__":
-    test_lesson_plan_workflow()
+    asyncio.run(test_lesson_plan_workflow())

@@ -1,11 +1,9 @@
-from pydantic_ai import Agent
-from pydantic_ai.models.mistral import MistralModel
+from agents.base_agent import BaseAgent
 from models.homework_assignment import HomeworkAssignment
 
-class HomeworkAgent(Agent):
+class HomeworkAgent(BaseAgent):
     def __init__(self):
-        model = MistralModel('mistral-small-latest')
-        super().__init__(model, result_type=HomeworkAssignment)
+        super().__init__(result_type=HomeworkAssignment)
 
     def generate_homework(self, topic: str, grade_level: int) -> HomeworkAssignment:
         """

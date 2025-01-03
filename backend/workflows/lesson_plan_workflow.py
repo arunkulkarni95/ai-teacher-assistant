@@ -10,17 +10,22 @@ async def process_lesson_plan(topic: str, content: str, target_language: str = "
     translator = TranslationAgent()
     differentiation = DifferentiationAgent()
 
-    # Perform translation and differentiation in parallel
-    translated_content = asyncio.create_task(translator.translate(content, target_language))
+    # Perform translation
+    translated_content = await translator.translate(content, target_language)
+
+    # Perform differentiation in parallel
     activities = await asyncio.gather(
         differentiation.generate_activity(topic, "struggling"),
         differentiation.generate_activity(topic, "average"),
-        differentiation.generate_activity(topic, "advanced")
+        differentiation.generate_activity(topic, "advanced"),
     )
 
     return LessonPlan(
         topic=topic,
-        objectives=["Understand the basics of the topic", "Apply knowledge in activities"],
-        content=await translated_content,
-        activities=activities
+        objectives=[
+            "Understand the basics of the topic.",
+            "Apply knowledge in activities.",
+        ],
+        content=translated_content,
+        activities=activities,
     )

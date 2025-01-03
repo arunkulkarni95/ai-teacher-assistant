@@ -1,17 +1,17 @@
-from pydantic_ai import Agent
-from pydantic_ai.models.openai import OpenAIModel
-from dotenv import load_dotenv
+from .base_agent import BaseAgent
+from models.agent_dependencies import DifferentiationResult, LessonPlanDependencies
 
-load_dotenv()
-
-class DifferentiationAgent(Agent):
+class DifferentiationAgent(BaseAgent):
     def __init__(self):
-        model = OpenAIModel('gpt-4o-mini')
-        super().__init__(model)
+        super().__init__(
+            result_type=DifferentiationResult,
+            system_prompt="You are a skilled education specialist. Create engaging, skill-level-appropriate activities for learners."
+        )
 
-    def generate_activity(self, topic: str, skill_level: str) -> str:
+    async def generate_activity(self, topic: str, skill_level: str) -> str:
         """
         Generate activities for specific skill levels.
         """
         prompt = f"Create an activity for {skill_level} learners on the topic '{topic}'."
-        return self.run(prompt)
+        result = await self.run(prompt, deps=LessonPlanDependencies(todays_date="2024-12-30"))
+        return result.data.activity_text  # Use structured result
