@@ -13,3 +13,9 @@ An AI-powered assistant to help teachers enhance lesson plans by translating, di
 ---
 
 Built with PydanticAI, FastAPI
+
+## License
+
+This project is licensed under the [Creative Commons Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0)](https://creativecommons.org/licenses/by-nc/4.0/). 
+
+You are free to use, copy, and modify this project for non-commercial purposes. Commercial use is prohibited without explicit permission from the author.
